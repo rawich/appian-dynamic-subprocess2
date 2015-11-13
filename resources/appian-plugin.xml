@@ -1,0 +1,12 @@
+<appian-plugin name="Dynamic Sub-Process 2" key="com.rawich.dynamicsubprocess2">
+
+  <plugin-info>
+    <description>Dynamic Sub-Process 2</description>
+    <vendor name="Rawich Poomrin" url="https://linkedin.com/in/rawich" />
+    <version>1.0.0</version>
+    <application-version min="7.9.0" />
+  </plugin-info>
+
+  <smart-service name="Dynamic Sub-Process II" key="DynamicSubProcessII"
+    class="com.rawich.appian.plugins.dynamic_subprocess.DynamicSubProcessII" />
+</appian-plugin>

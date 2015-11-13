@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="Dynamic Subprocess" default="dist" basedir=".">
+    <description>
+        Appian Dynamic Sub-Process II Smart Service
+    </description>
+	
+	<xmlproperty file="resources/appian-plugin.xml"/>
+	
+  <!-- set global properties for this build -->
+  <property name="src" location="src"/>
+  <property name="resources" location="resources"/>
+  <property name="build" location="build"/>
+  <property name="dist"  location="../exports"/>
+  <!-- This is where to put all required Appian JAR files, including log4j-1.2.15.jar -->
+  <property name="appian.lib.dir" location="/java/appian-lib"/>
+  <property name="jar.file" location="${dist}/${appian-plugin(key)}_${appian-plugin.plugin-info.version}.jar"/>
+
+	
+  <path id="dependency.path">
+    <fileset dir="${appian.lib.dir}" includes="appian*.jar,log4j-1.2.15.jar" />
+  </path>
+
+  <target name="init" depends="clean">
+    	<!-- Create the time stamp -->
+   	 <tstamp/>
+    	<!-- Create the build directory structure used by compile -->
+    	<mkdir dir="${build}"/>
+  </target>
+
+  <target name="compile" depends="init"
+  	description="compile the source " >
+    	<!-- Compile the java code from ${src} into ${build} -->
+   	<javac srcdir="${src}" destdir="${build}" classpathref="dependency.path" includeantruntime="false"/>
+  	<copy todir="${build}/src">
+  		<fileset dir="${src}"/>
+  	</copy>
+  	<copy todir="${build}">
+  		<fileset dir="${resources}"/>
+  	</copy>
+    <!--copy todir="${build}" file="${basedir}/appian-plugin.xml" /-->
+  </target>
+
+  <target name="dist" depends="compile"
+  	description="generate the distribution" >
+    
+  	<!-- Create the distribution directory -->
+    	<mkdir dir="${dist}"/>
+
+    	<!-- Put everything in ${build} into the {$projectName}-${DSTAMP}.jar file -->
+    	<jar jarfile="${jar.file}" basedir="${build}"/>
+  </target>
+
+  <target name="clean"
+    	description="clean up" >
+  	
+    	<!-- Delete the ${build} and ${dist} directory trees -->
+    	<delete dir="${build}"/>
+    	<delete file="${jar.file}"/>
+  </target>
+</project>
